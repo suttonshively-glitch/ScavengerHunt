@@ -2,6 +2,7 @@ import {
   Mesh,
   MeshStandardMaterial,
   SphereGeometry,
+  PlaneGeometry
   SessionMode,
   World,
 } from '@iwsdk/core';
@@ -30,13 +31,36 @@ World.create(document.getElementById('scene-container'), {
 
   const { camera } = world;
 
-  
-  // Create a green sphere
-  const sphereGeometry = new SphereGeometry(0.5, 32, 32);
-  const greenMaterial = new MeshStandardMaterial({ color: 0x33ff33 });
-  const sphere = new Mesh(sphereGeometry, greenMaterial);
-  sphere.position.set(1, 0, -2);
-  const sphereEntity = world.createTransformEntity(sphere);
+  //Add all my objects here
+  // Floor /////////////////////////////////////////////////////////////////////////////////
+  const floorGeometry = new THREE.PlaneGeometry(100, 100);
+  const floorMaterial = new THREE.MeshStandardMaterial({ color: 0x228B22 }); // Forest green
+  const floor = new THREE.Mesh(floorGeometry, floorMaterial);
+  floor.rotation.x = -Math.PI / 2; // Rotate to lie flat
+  floor.position.y = 0; // At ground level
+  const floorEntity = world.createTransformEntity(floor);
+
+  // Tree importing /////////////////////////////////////////////////////////////////////////
+  import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+
+  const loader = new GLTFLoader();
+  loader.load('path/to/fur_tree.glb', (gltf) => {
+    const treeModel = gltf.scene;
+    treeModel.scale.set(0.5, 0.5, 0.5); // Adjust scale as needed
+
+    const spacing = 8;
+    const gridSize = 100;
+    const halfSize = gridSize / 2;
+
+    for (let x = -halfSize; x <= halfSize; x += spacing) {
+      for (let z = -halfSize; z <= halfSize; z += spacing) {
+        const tree = treeModel.clone();
+        tree.position.set(x, 0, z);
+        world.createTransformEntity(tree);
+      }
+    }
+  });
+
 
 
 
