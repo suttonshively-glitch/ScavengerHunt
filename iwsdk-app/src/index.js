@@ -58,7 +58,7 @@ World.create(document.getElementById('scene-container'), {
   const sphereGeometry = new SphereGeometry(0.5, 32, 32);
   const sphereMaterial = new MeshStandardMaterial({ color: 0xff0000 }); // red
   const sphere = new Mesh(sphereGeometry, sphereMaterial);
-  sphere.position.set(25, 0.5, -20);
+  sphere.position.set(-50, 0.5, 0);
   const sphereEntity = world.createTransformEntity(sphere);
 
   const sphere1 = new Mesh(sphereGeometry, sphereMaterial);
@@ -68,6 +68,23 @@ World.create(document.getElementById('scene-container'), {
   const sphere2 = new Mesh(sphereGeometry, sphereMaterial);
   sphere2.position.set(30, 0.5, 20);
   const sphere2Entity = world.createTransformEntity(sphere2);
+
+  sphereEntity.addComponent(Interactable);
+  sphereEntity.object3D.addEventListener("pointerdown", collect);
+  function collect(){
+    sphereEntity.destroy();
+  }
+  sphere1Entity.addComponent(Interactable);
+  sphere1Entity.object3D.addEventListener("pointerdown", collect1);
+  function collect1(){
+    sphere1Entity.destroy();
+  }
+  sphere2Entity.addComponent(Interactable);
+  sphere2Entity.object3D.addEventListener("pointerdown", collect2);
+  function collect2(){
+    sphere2Entity.destroy();
+  }
+
 
   // Tree importing /////////////////////////////////////////////////////////////////////////
 
