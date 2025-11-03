@@ -67,7 +67,7 @@ World.create(document.getElementById('scene-container'), {
 
   const sphere2 = new Mesh(sphereGeometry, sphereMaterial);
   sphere2.position.set(13, 0.5, 20);
-  const sphere2Entity = world.createTransformEntity(sphere);
+  const sphere2Entity = world.createTransformEntity(sphere2);
 
   // Tree importing /////////////////////////////////////////////////////////////////////////
 
