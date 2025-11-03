@@ -7,7 +7,6 @@ import {
   DirectionalLight,
   EnvironmentType,
   LocomotionEnvironment,
-  GLTFLoader,
   SessionMode,
   World,
   AssetType,
@@ -59,7 +58,7 @@ World.create(document.getElementById('scene-container'), {
   const sphereGeometry = new SphereGeometry(0.5, 32, 32);
   const sphereMaterial = new MeshStandardMaterial({ color: 0xff0000 }); // red
   const sphere = new Mesh(sphereGeometry, sphereMaterial);
-  sphere.position.set(12, 0.5, -70);
+  sphere.position.set(12, 0.5, -20);
   const sphereEntity = world.createTransformEntity(sphere);
 
   const sphere1 = new Mesh(sphereGeometry, sphereMaterial);
@@ -67,7 +66,7 @@ World.create(document.getElementById('scene-container'), {
   const sphere1Entity = world.createTransformEntity(sphere1);
 
   const sphere2 = new Mesh(sphereGeometry, sphereMaterial);
-  sphere2.position.set(33, 0.5, -20);
+  sphere2.position.set(13, 0.5, 20);
   const sphere2Entity = world.createTransformEntity(sphere);
 
   // Tree importing /////////////////////////////////////////////////////////////////////////
