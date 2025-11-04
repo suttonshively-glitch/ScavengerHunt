@@ -22,7 +22,14 @@ import {
 
 import { PanelSystem } from './panel.js'; // system for displaying "Enter VR" panel on Quest 1
 
-const assets = { };//import
+const assets = {
+  furtree: {                                // <----------------------- added plant model
+    url: '/gltf/plantSansevieria/fur_tree.glb',
+    type: AssetType.GLTF,
+    priority: 'critical',
+  },
+
+ };//import 3d here
 
 World.create(document.getElementById('scene-container'), {
   assets,
@@ -32,14 +39,12 @@ World.create(document.getElementById('scene-container'), {
     features: { }
   },
 
-  features: {
+  features: { 
     locomotion: {
       smooth: true,
       teleport: true,
-      speed: 1.5,
-      teleportDistance: 2.5,
     }
-   },
+  },
 
 }).then((world) => {
 
@@ -51,50 +56,34 @@ World.create(document.getElementById('scene-container'), {
   const floorMaterial = new MeshStandardMaterial({ color: 0x228B22 }); // Forest green
   const floor = new Mesh(floorGeometry, floorMaterial);
   floor.rotation.x = -Math.PI / 2; // Rotate to lie flat
+  floor.position.y = 0; // At ground level
   const floorEntity = world.createTransformEntity(floor);
-  floorEntity.addComponent(LocomotionEnvironment, { type: EnvironmentType.STATIC});
+  floorEntity.addComponent(LocomotionEnvironment, { type: EnvironmentType.STATIC });
 
   // treasure /////////////////////////////////////////////////////////////////////////////////
   const sphereGeometry = new SphereGeometry(0.5, 32, 32);
   const sphereMaterial = new MeshStandardMaterial({ color: 0xff0000 }); // red
   const sphere = new Mesh(sphereGeometry, sphereMaterial);
-  sphere.position.set(-50, 0.5, 0);
   const sphereEntity = world.createTransformEntity(sphere);
 
+  sphereEntity.object3D.position.set(0, 0.5, -2);
+
   const sphere1 = new Mesh(sphereGeometry, sphereMaterial);
-  sphere1.position.set(50, 0.5, -50);
   const sphere1Entity = world.createTransformEntity(sphere1);
 
+  sphere1Entity.object3D.position.set(1, 0.5, -2);
+
   const sphere2 = new Mesh(sphereGeometry, sphereMaterial);
-  sphere2.position.set(30, 0.5, 20);
   const sphere2Entity = world.createTransformEntity(sphere2);
 
-  sphereEntity.addComponent(Interactable);
-  sphereEntity.object3D.addEventListener("pointerdown", collect);
-  function collect(){
-    sphereEntity.destroy();
-  }
-  sphere1Entity.addComponent(Interactable);
-  sphere1Entity.object3D.addEventListener("pointerdown", collect1);
-  function collect1(){
-    sphere1Entity.destroy();
-  }
-  sphere2Entity.addComponent(Interactable);
-  sphere2Entity.object3D.addEventListener("pointerdown", collect2);
-  function collect2(){
-    sphere2Entity.destroy();
-  }
-
+  sphere2Entity.object3D.position.set(2, 0.5, -2);
 
   // Tree importing /////////////////////////////////////////////////////////////////////////
+  const treeModel = AssetManager.getGLTF('furtree').scene;
+  const treeEntity = world.createTransformEntity(treeModel);
+  treeEntity.object3D.position.set(-1,1,-1);
 
-  
 
-    
-  
-  
-
-  
 
 
 
