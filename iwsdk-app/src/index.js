@@ -24,7 +24,7 @@ import { PanelSystem } from './panel.js'; // system for displaying "Enter VR" pa
 
 const assets = {
   furtree: {                                // <----------------------- added plant model
-    url: '/gltf/plantSansevieria/fur_tree.glb',
+    url: '/gltf/plantSansevieria/oak_tree.glb',
     type: AssetType.GLTF,
     priority: 'critical',
   },
@@ -61,7 +61,7 @@ World.create(document.getElementById('scene-container'), {
   floorEntity.addComponent(LocomotionEnvironment, { type: EnvironmentType.STATIC });
 
   // treasure /////////////////////////////////////////////////////////////////////////////////
-  const sphereGeometry = new SphereGeometry(0.5, 32, 32);
+  const sphereGeometry = new SphereGeometry(0.25, 32, 32);
   const sphereMaterial = new MeshStandardMaterial({ color: 0xff0000 }); // red
   const sphere = new Mesh(sphereGeometry, sphereMaterial);
   const sphereEntity = world.createTransformEntity(sphere);
@@ -81,7 +81,7 @@ World.create(document.getElementById('scene-container'), {
   // Tree importing /////////////////////////////////////////////////////////////////////////
   const treeModel = AssetManager.getGLTF('furtree').scene;
   const treeEntity = world.createTransformEntity(treeModel);
-  treeEntity.object3D.position.set(-1,1,-1);
+  treeEntity.object3D.position.set(-1,0,-1);
 
 
 
