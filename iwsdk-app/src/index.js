@@ -52,7 +52,7 @@ World.create(document.getElementById('scene-container'), {
 
   //Add all my objects here
   // Floor /////////////////////////////////////////////////////////////////////////////////
-  const floorGeometry = new PlaneGeometry(100, 100);
+  const floorGeometry = new PlaneGeometry(110, 110);
   const floorMaterial = new MeshStandardMaterial({ color: 0x228B22 }); // Forest green
   const floor = new Mesh(floorGeometry, floorMaterial);
   floor.rotation.x = -Math.PI / 2; // Rotate to lie flat
@@ -61,28 +61,45 @@ World.create(document.getElementById('scene-container'), {
   floorEntity.addComponent(LocomotionEnvironment, { type: EnvironmentType.STATIC });
 
   // treasure /////////////////////////////////////////////////////////////////////////////////
-  const sphereGeometry = new SphereGeometry(0.25, 32, 32);
-  const sphereMaterial = new MeshStandardMaterial({ color: 0xff0000 }); // red
+  const sphereGeometry = new SphereGeometry(0.2, 32, 32);
+  const sphereMaterial = new MeshStandardMaterial({ color: 0xC89D7C }); // brown
   const sphere = new Mesh(sphereGeometry, sphereMaterial);
   const sphereEntity = world.createTransformEntity(sphere);
 
-  sphereEntity.object3D.position.set(0, 0.5, -2);
+  sphereEntity.object3D.position.set(50, 0.25, 50);
 
   const sphere1 = new Mesh(sphereGeometry, sphereMaterial);
   const sphere1Entity = world.createTransformEntity(sphere1);
 
-  sphere1Entity.object3D.position.set(1, 0.5, -2);
+  sphere1Entity.object3D.position.set(0, 0.95, -30);
 
   const sphere2 = new Mesh(sphereGeometry, sphereMaterial);
   const sphere2Entity = world.createTransformEntity(sphere2);
 
-  sphere2Entity.object3D.position.set(2, 0.5, -2);
+  sphere2Entity.object3D.position.set(0, 0.75, 30);
 
   // Tree importing /////////////////////////////////////////////////////////////////////////
   const treeModel = AssetManager.getGLTF('furtree').scene;
-  const treeEntity = world.createTransformEntity(treeModel);
-  treeEntity.object3D.position.set(-1,0,-1);
+  const spacing = 5;
+  const gridSize = 100;
+  const halfSize = gridSize / 2;
 
+  for (let x = -halfSize; x <= halfSize; x += spacing) {
+    for (let z = -halfSize; z <= halfSize; z += spacing) {
+      const tree = treeModel.clone(true);
+
+      // Add random offset to position
+      const offsetX = (Math.random() - 0.5) * spacing * 0.6; // ±2.4m
+      const offsetZ = (Math.random() - 0.5) * spacing * 0.6;
+
+      tree.position.set(x + offsetX, -.2, z + offsetZ);
+
+      // Optional: random rotation for variety
+      tree.rotation.y = Math.random() * Math.PI * 2;
+
+      world.createTransformEntity(tree);
+    }
+  }
 
 
 
