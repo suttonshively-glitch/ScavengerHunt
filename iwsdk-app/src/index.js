@@ -61,22 +61,22 @@ World.create(document.getElementById('scene-container'), {
   floorEntity.addComponent(LocomotionEnvironment, { type: EnvironmentType.STATIC });
 
   // treasure /////////////////////////////////////////////////////////////////////////////////
-  const sphereGeometry = new SphereGeometry(0.2, 32, 32);
+  const sphereGeometry = new SphereGeometry(0.5, 32, 32);
   const sphereMaterial = new MeshStandardMaterial({ color: 0xC89D7C }); // brown
   const sphere = new Mesh(sphereGeometry, sphereMaterial);
   const sphereEntity = world.createTransformEntity(sphere);
 
-  sphereEntity.object3D.position.set(50, 0.25, 50);
+  sphereEntity.object3D.position.set(50, 0.25, -50);
 
   const sphere1 = new Mesh(sphereGeometry, sphereMaterial);
   const sphere1Entity = world.createTransformEntity(sphere1);
 
-  sphere1Entity.object3D.position.set(0, 0.95, -30);
+  sphere1Entity.object3D.position.set(-30, 0.95, -10);
 
   const sphere2 = new Mesh(sphereGeometry, sphereMaterial);
   const sphere2Entity = world.createTransformEntity(sphere2);
 
-  sphere2Entity.object3D.position.set(0, 0.75, 30);
+  sphere2Entity.object3D.position.set(10, 0.75, 30);
 
   // Tree importing /////////////////////////////////////////////////////////////////////////
   const treeModel = AssetManager.getGLTF('furtree').scene;
@@ -100,6 +100,8 @@ World.create(document.getElementById('scene-container'), {
       world.createTransformEntity(tree);
     }
   }
+  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
 
 
